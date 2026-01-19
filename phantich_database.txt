@@ -1,0 +1,162 @@
+1. Bảng users
+id: INT PRIMARY KEY AUTO_INCREMENT
+name: VARCHAR(100) NOT NULL
+email: VARCHAR(100) UNIQUE NOT NULL
+phone_number: VARCHAR(20)
+password: VARCHAR(255) NOT NULL
+status: ENUM('active', 'inactive', 'banned') DEFAULT 'active'
+email_verified_at: DATETIME
+reset_password_token: VARCHAR(100)
+reset_password_expires_at: DATETIME
+role_id: INT
+created_at: DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+updated_at: DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+deleted_at: DATETIME
+
+2. Bảng categories
+id: INT PRIMARY KEY AUTO_INCREMENT
+name: VARCHAR(100) NOT NULL
+slug: VARCHAR(100) UNIQUE NOT NULL
+status: ENUM('active', 'inactive') DEFAULT 'active'
+created_at: DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+updated_at: DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+
+3. Bảng brands
+id: INT PRIMARY KEY AUTO_INCREMENT
+name: VARCHAR(100) NOT NULL
+slug: VARCHAR(100) UNIQUE NOT NULL
+status: ENUM('active', 'inactive') DEFAULT 'active'
+created_at: DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+updated_at: DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+
+4. Bảng products
+id: INT PRIMARY KEY AUTO_INCREMENT
+name: VARCHAR(255) NOT NULL
+category_id: INT NOT NULL
+brand_id: INT NOT NULL
+sku: VARCHAR(50) UNIQUE NOT NULL
+thumbnail: VARCHAR(255)
+description: TEXT
+short_description: VARCHAR(255)
+slug: VARCHAR(255) UNIQUE NOT NULL
+status: ENUM('active', 'inactive', 'out_of_stock') DEFAULT 'active'
+created_at: DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+updated_at: DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+
+5. Bảng product_variants
+id: INT PRIMARY KEY AUTO_INCREMENT
+product_id: INT NOT NULL
+color: VARCHAR(50)
+size: VARCHAR(50)
+sku: VARCHAR(50) UNIQUE NOT NULL
+price: DECIMAL(10,2) NOT NULL
+stock_quantity: INT NOT NULL
+image: VARCHAR(255)
+status: ENUM('active', 'inactive') DEFAULT 'active'
+created_at: DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+updated_at: DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+
+6. Bảng orders
+id: INT PRIMARY KEY AUTO_INCREMENT
+user_id: INT NOT NULL
+total_price: DECIMAL(10,2) NOT NULL
+status: ENUM('pending', 'processing', 'shipped', 'delivered', 'cancelled') DEFAULT 'pending'
+payment_method: ENUM('cod', 'bank_transfer', 'online') NOT NULL
+payment_status: ENUM('pending', 'completed', 'failed') DEFAULT 'pending'
+note: TEXT
+shipping_address_id: INT NOT NULL
+coupon_id: INT
+created_at: DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+updated_at: DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+
+7. Bảng order_details
+id: INT PRIMARY KEY AUTO_INCREMENT
+order_id: INT NOT NULL
+product_variant_id: INT NOT NULL
+quantity: INT NOT NULL
+price: DECIMAL(10,2) NOT NULL
+discount: DECIMAL(10,2) DEFAULT 0
+subtotal: DECIMAL(10,2) NOT NULL
+
+8. Bảng payments
+id: INT PRIMARY KEY AUTO_INCREMENT
+order_id: INT NOT NULL
+method: ENUM('cod', 'bank_transfer', 'online') NOT NULL
+amount: DECIMAL(10,2) NOT NULL
+status: ENUM('pending', 'completed', 'failed') DEFAULT 'pending'
+transaction_id: VARCHAR(100)
+paid_at: DATETIME
+payment_gateway: VARCHAR(50)
+
+9. Bảng wishlists
+id: INT PRIMARY KEY AUTO_INCREMENT
+user_id: INT NOT NULL
+product_id: INT NOT NULL
+created_at: DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+
+10. Bảng carts
+id: INT PRIMARY KEY AUTO_INCREMENT
+user_id: INT
+session_id: VARCHAR(100)
+product_variant_id: INT NOT NULL
+quantity: INT NOT NULL
+created_at: DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+updated_at: DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+
+11. Bảng reviews
+id: INT PRIMARY KEY AUTO_INCREMENT
+user_id: INT NOT NULL
+product_id: INT NOT NULL
+rating: TINYINT NOT NULL CHECK (rating BETWEEN 1 AND 5)
+comment: TEXT
+status: ENUM('pending', 'approved', 'rejected') DEFAULT 'pending'
+created_at: DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+updated_at: DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+
+12. Bảng shipping_addresses
+id: INT PRIMARY KEY AUTO_INCREMENT
+user_id: INT NOT NULL
+name: VARCHAR(100) NOT NULL
+phone_number: VARCHAR(20) NOT NULL
+address: VARCHAR(255) NOT NULL
+ward: VARCHAR(100)
+district: VARCHAR(100)
+city: VARCHAR(100)
+is_default: BOOLEAN DEFAULT FALSE
+created_at: DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+updated_at: DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+
+13. Bảng coupons
+id: INT PRIMARY KEY AUTO_INCREMENT
+code: VARCHAR(50) UNIQUE NOT NULL
+discount_type: ENUM('percent', 'fixed') NOT NULL
+discount_value: DECIMAL(10,2) NOT NULL
+min_order_value: DECIMAL(10,2)
+max_discount: DECIMAL(10,2)
+start_date: DATETIME NOT NULL
+end_date: DATETIME NOT NULL
+usage_limit: INT
+user_usage_limit: INT
+used_count: INT DEFAULT 0
+applicable_categories: JSON
+applicable_products: JSON
+status: ENUM('active', 'inactive') DEFAULT 'active'
+created_at: DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+updated_at: DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+
+14. Bảng notifications
+id: INT PRIMARY KEY AUTO_INCREMENT
+user_id: INT NOT NULL
+title: VARCHAR(100) NOT NULL
+message: TEXT NOT NULL
+type: ENUM('email', 'push', 'system') NOT NULL
+is_read: BOOLEAN DEFAULT FALSE
+order_id: INT
+created_at: DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+
+15. Bảng roles
+id: INT PRIMARY KEY AUTO_INCREMENT
+name: VARCHAR(50) NOT NULL
+permissions: JSON
+created_at: DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+updated_at: DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP

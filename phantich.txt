@@ -1,0 +1,25 @@
+1. Phân tích dự án
+ - FRONTEND :
+    - Trang chủ: Hiển thị sản phẩm nổi bật, danh mục, thương hiệu, và ưu đãi (thay vì trang mã giảm giá riêng).
+    - Trang danh sách sản phẩm: Liệt kê sản phẩm, hỗ trợ lọc và tìm kiếm.
+    - Trang chi tiết sản phẩm: Thông tin sản phẩm, biến thể, đánh giá, thêm vào giỏ hàng/yêu thích.
+    - Trang giỏ hàng: Xem và cập nhật giỏ hàng, nhập mã giảm giá.
+    - Trang checkout: Nhập thông tin giao hàng, chọn phương thức thanh toán.
+    - Trang thanh toán: Xử lý thanh toán và xác nhận.
+    - Trang liên hệ: Form liên hệ và thông tin cửa hàng.
+    - Trang tài khoản người dùng: Quản lý thông tin, địa chỉ, đơn hàng, danh sách yêu thích
+    - Trang tìm kiếm: Hiển thị kết quả tìm kiếm sản phẩm.
+    - Trang thông báo: Hiển thị thông báo của khách hàng. ( có thể bỏ thay bằng thanh thông báo bên trang chủ của khách hàng)
+    - Trang xác nhận đơn hàng: Hiển thị chi tiết đơn hàng sau khi đặt.
+- Admin:
+    - Quản lý tài khoản người dùng: Quản lý thông tin, trạng thái, và gán vai trò cho tài khoản.
+    - Quản lý danh mục: Thêm, sửa, xóa danh mục (categories).
+    - Quản lý sản phẩm: Quản lý sản phẩm và biến thể (products, product_variants).
+    - Quản lý đơn hàng: Xem, cập nhật trạng thái đơn hàng (orders, order_details).
+    - Quản lý đánh giá, phản hồi: Phê duyệt, xóa đánh giá (reviews). // có thể chỉ xem được đánh giá thôi không xóa được 
+    - Quản lý thương hiệu: Thêm, sửa, xóa thương hiệu (brands)
+    - Quản lý mã giảm giá: Thêm, sửa, xóa mã giảm giá (coupons).
+    - Quản lý thông báo: Tạo, gửi, xem thông báo (notifications).
+    - Quản lý vai trò: Thêm, sửa, xóa vai trò và quyền (roles).
+
+    
